@@ -1,0 +1,14 @@
+{
+    "manifest_version": 3,
+    "name": "Google Drive Iframe Converter",
+    "version": "1.0",
+    "description": "Converts Google Drive links to iframe embed codes.",
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "permissions": [
+      "activeTab",
+      "clipboardWrite"
+    ]
+  }
+  
