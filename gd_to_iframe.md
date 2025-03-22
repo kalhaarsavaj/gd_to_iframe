@@ -5,15 +5,10 @@ This document outlines the files and structure of a Chrome extension designed to
 
 ## File Structure
 
-
-```
-
 google-drive-iframe-converter/
 ├── manifest.json
 ├── popup.html
 └── popup.js
-
-```
 
 ## File Contents
 
