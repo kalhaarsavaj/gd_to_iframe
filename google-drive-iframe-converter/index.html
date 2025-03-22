@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Drive Link Converter</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #inputContainer {
+            margin-bottom: 20px;
+        }
+
+        #resultContainer {
+            width: 80%;
+            max-width: 600px;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+          width: 100%;
+          height: 100px;
+          box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <h1>Google Drive Link to Iframe Converter</h1>
+
+    <div id="inputContainer">
+        <label for="driveLink">Enter Google Drive Link:</label><br>
+        <input type="text" id="driveLink" name="driveLink" style="width: 400px;">
+        <button id="convertButton">Convert</button>
+    </div>
+
+    <div id="resultContainer" style="display: none;">
+        <h2>Iframe Code:</h2>
+        <textarea id="iframeCode" readonly></textarea>
+        <p>Preview:</p>
+        <div id="iframePreview"></div>
+    </div>
+
+    <script>
+        document.getElementById("convertButton").addEventListener("click", convertLink);
+
+        function convertLink() {
+            const driveLink = document.getElementById("driveLink").value;
+            let iframeCode = "";
+            let previewUrl = "";
+
+            if (driveLink.includes("/file/d/")) {
+                const match = driveLink.match(/file\/d\/([a-zA-Z0-9_-]+)/);
+                if (match && match[1]) {
+                    const fileId = match[1];
+                    previewUrl = `https://drive.google.com/file/d/${fileId}/preview`;
+                    iframeCode = `<iframe src="${previewUrl}" width="600" height="400" frameborder="0" allowfullscreen></iframe>`;
+                }
+            } else if (driveLink.includes("/folders/")) {
+                const match = driveLink.match(/folders\/([a-zA-Z0-9_-]+)/);
+                if (match && match[1]) {
+                    const folderId = match[1];
+                    previewUrl = `https://drive.google.com/embeddedfolderview?id=${folderId}&usp=sharing`;
+                    iframeCode = `<iframe src="${previewUrl}" width="600" height="400" frameborder="0" allowfullscreen></iframe>`;
+                }
+            }
+
+            if (iframeCode) {
+                document.getElementById("iframeCode").value = iframeCode;
+                document.getElementById("iframePreview").innerHTML = iframeCode;
+                document.getElementById("resultContainer").style.display = "block";
+            } else {
+                alert("Invalid Google Drive Link.");
+                document.getElementById("resultContainer").style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
